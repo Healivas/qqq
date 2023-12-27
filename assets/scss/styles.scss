@@ -234,16 +234,30 @@ main {
   margin: 0 auto;
 }
 
+#balance {
+  margin-bottom: 10px;
+}
+
 .input {
-  background-color: #2d3436;
   width: 100%;
-  padding: 10px;
-  border-radius: 8px;
+  display: flex;
+  align-items: center;
+
+  button {
+    font-size: 16px;
+    background-color: #2d3436;
+    padding: 10px;
+    border-radius: 8px;
+    margin-left: 10px;
+  }
 
   input {
     width: 100%;
     color: #fff;
     font-size: 16px;
+    background-color: #2d3436;
+    padding: 10px;
+    border-radius: 8px;
 
     &::placeholder {
       color: #fff;

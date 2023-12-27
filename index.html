@@ -20,8 +20,10 @@
         <main>
           <div class="row">
             <div class="col-3">
+              <div id="balance">...</div>
               <div class="input">
-                <input placeholder="Введите токен" type="text" name="" id="" />
+                <input placeholder="Введите токен" type="text" name="" id="token" />
+                <button id="token_button">ОК</button>
               </div>
             </div>
           </div>
@@ -30,5 +32,52 @@
       </div>
     </div>
     <script src="assets/js/main.js"></script>
+    <script>
+      async function getBalance(apiKey) {
+        try {
+          const apiUrl = `https://smsi.vip/api/getbalance/${apiKey}`;
+
+          // Отправляем GET-запрос по указанной ссылке
+          const response = await fetch(apiUrl);
+
+          // Проверяем, успешен ли запрос (код ответа 200)
+          if (!response.ok) {
+            throw new Error(`Ошибка запроса: ${response.status}`);
+          }
+
+          // Извлекаем данные из ответа в формате JSON
+          const data = await response.json();
+
+          // Возвращаем данные
+          return data;
+        } catch (error) {
+          console.error("Произошла ошибка:", error.message);
+        }
+      }
+
+      // Функция для обновления элемента с балансом
+      async function updateBalance() {
+        const tokenElement = document.getElementById("token");
+        const balanceElement = document.getElementById("balance");
+
+        // Получаем токен из элемента
+        const apiKey = tokenElement.value;
+
+        // Проверяем, есть ли токен
+        if (!apiKey) {
+          alert("Введите токен!");
+          return;
+        }
+
+        // Получаем баланс
+        const balanceData = await getBalance(apiKey);
+
+        // Вставляем баланс в элемент
+        balanceElement.textContent = balanceData.balance;
+      }
+
+      // Обработчик события нажатия на кнопку
+      document.getElementById("token_button").addEventListener("click", updateBalance);
+    </script>
   </body>
 </html>
